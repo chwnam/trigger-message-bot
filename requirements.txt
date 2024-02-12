@@ -1,0 +1,4 @@
+python-dotenv==1.0.1
+python-telegram==0.18.0
+telegram_text==0.2.0
+watchdog==4.0.0
