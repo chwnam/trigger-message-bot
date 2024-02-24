@@ -1,3 +1,5 @@
 .env
 .idea/
 .tdlib_files/
+
+/venv
