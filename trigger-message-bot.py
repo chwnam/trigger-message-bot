@@ -3,6 +3,7 @@ My Bot
 
 내 메시지 트리거 봇
 """
+import logging
 from glob import glob
 from os import remove
 from os.path import exists, isdir
@@ -16,6 +17,12 @@ from telegram.client import Telegram
 from telegram.worker import BaseWorker
 from watchdog.events import FileSystemEventHandler, FileSystemEvent
 from watchdog.observers import Observer
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 
 # 귀찮아! 그냥 글로벌 설정 가즈아
@@ -35,7 +42,9 @@ def enqueue_message(queue: Queue, file_path: str) -> None:
             message = fp.read().strip()
             if message:
                 queue.put(('send_message', message), timeout=0.5)
+                logging.info('queued: ' + message)
         remove(file_path)
+        logging.info(file_path + ' removed.')
 
 
 class TelegramHandler(FileSystemEventHandler):
